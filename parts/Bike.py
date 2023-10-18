@@ -156,7 +156,11 @@ class Bike:
 
         self.speed = self.speed + acceleration * delta_t
 
-        print(motor_rpm)
+        gearbox_rpm = self.gearbox.get_ratio * motor_rpm
+        final_ratio = 45 / 14
+
+        print((self.rear_wheel.get_radius * 0.02 * math.pi) * gearbox_rpm * final_ratio * 1000 / 216000)
+        # print(motor_rpm)
         # print(self.speed*1000/3600)
 
     """

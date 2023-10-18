@@ -26,4 +26,4 @@ class Gearbox(Part):
 
     @property
     def get_ratio(self):
-        return 1 / self.ratios[self.gear]
+        return 1/ self.ratios[self.gear]

@@ -10,3 +10,15 @@ class Wheel(Part):
     @property
     def get_radius(self):
         return self.radius * 2.54 / 2
+
+
+class RearWheel(Wheel):
+
+    def __init__(self, pignon):
+        super().__init__()
+        self.pignon = pignon
+        self.rpm = 0
+
+    @property
+    def get_ratio(self):
+        return self.pignon
