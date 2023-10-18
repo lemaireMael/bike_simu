@@ -1,4 +1,5 @@
 from parts.Bike import Bike
+import time
 
 from pygame.locals import (
     K_UP,
@@ -22,6 +23,9 @@ class Manager:
         self.shift_up_flag = False
         self.shift_down_flag = False
 
+        self.current_time = time.time()
+        self.previous_time = time.time()
+
     def accelerate(self):
         self.bike.accelerate()
 
@@ -35,6 +39,8 @@ class Manager:
         self.bike.shift_down()
 
     def handle_actions(self, pressed_keys):
+        self.current_time = time.time()
+        delta_t = self.current_time - self.previous_time
 
         if pressed_keys[K_UP]:
             self.accelerate()
@@ -67,5 +73,7 @@ class Manager:
         if pressed_keys[K_s] and not self.bike.is_started:
             self.bike.start()
 
-        print(self.bike.calculate_speed())
+        self.bike.calculate_wheel_speed(delta_t)
+        self.previous_time = self.current_time
+        # time.sleep(0.2)
 
