@@ -6,11 +6,18 @@ import math
 
 class Engine(Part):
 
-    def __init__(self):
+    def __init__(self, bore, stroke, cylinder, architecture, rev_limit):
         super().__init__(70)
+        self.stroke = stroke
+        self.bore = bore
+
+        self.volume = round((self.bore / 2) * (self.bore / 2) * math.pi * self.stroke * cylinder)
+        self.number_cylinder = cylinder
+        self.architecture = architecture
+
         self.rpm = 0
-        self.idle_rpm = 1000
-        self.rev_limit = 10000
+        self.rev_limit = rev_limit
+        self.idle_rpm = round(rev_limit * 0.14)
 
     @property
     def get_rpm(self):
