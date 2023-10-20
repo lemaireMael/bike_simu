@@ -58,9 +58,17 @@ while running:
 
     times = stats.times
     data = stats.data
-    ax.plot(times, data)
-    try :
-        ax.set_xlim(times[-20], times[-1])
+
+    ax.set_xlabel('time (s)')
+    ax.set_ylabel('rpm', color='tab:red')
+    ax.plot(times, data[0], color='tab:red')
+
+    ax2 = ax.twinx()
+    ax2.set_ylabel('gear', color='tab:blue')
+    ax2.plot(times, data[1])
+
+    try:
+        ax.set_xlim(times[-100], times[-1])
     except IndexError:
         pass
 

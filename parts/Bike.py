@@ -103,10 +103,10 @@ class Bike:
 
     def calculate_linear_speed(self):
         motor_rpm = self.engine.get_rpm
-        print(f"rpm {motor_rpm}")
         end_rpm = self.gearbox.get_ratio * self.rear_wheel.get_ratio * motor_rpm
 
-        return (self.rear_wheel.get_radius * 0.02 * math.pi) * end_rpm * 1000 / 216000
+        return end_rpm
+        # return (self.rear_wheel.get_radius * 0.02 * math.pi) * end_rpm * 1000 / 216000
 
     """
     -------------- TRANSMISSION END ---------------

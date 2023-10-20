@@ -82,7 +82,7 @@ class Manager:
 
             speed_kph = self.bike.calculate_linear_speed()
 
-            self.stat_tracker.log_data(self.bike.engine.get_rpm)
+            self.stat_tracker.log_data(self.bike.engine.get_rpm, self.bike.gearbox.get_gear)
             self.stat_tracker.log_time(delta_t)
 
             self.time_tracker.reset()

@@ -5,7 +5,7 @@ class StatTracker:
 
     def __init__(self):
         self.time = np.zeros(101)
-        self.speed = 0
+        self.speed = np.zeros(101)
         self.accel = 0
 
         self.turning_angle = 0
@@ -29,8 +29,9 @@ class StatTracker:
 
     @property
     def data(self):
-        return self.engine_rev[-100:]
+        return self.engine_rev[-100:], self.speed[-100:]
 
-    def log_data(self, data):
+    def log_data(self, data, speed):
         self.engine_rev = np.append(self.engine_rev, data)
+        self.speed = np.append(self.speed, speed)
 
