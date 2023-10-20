@@ -1,5 +1,11 @@
 import pygame
 from Manager import Manager
+import pylab
+import time
+import matplotlib
+matplotlib.use("agg")
+
+import matplotlib.backends.backend_agg as agg
 
 from pygame.locals import (
     K_UP,
@@ -12,7 +18,14 @@ from pygame.locals import (
     KEYUP,
     QUIT,
 )
+
+speed_list = []
+time_list = []
+
 pygame.init()
+
+fig = pylab.figure(dpi=100)
+ax = fig.gca()
 
 # Define constants for the screen width and height
 SCREEN_WIDTH = 800
@@ -41,8 +54,23 @@ while running:
 
     # Get all the keys currently pressed
     pressed_keys = pygame.key.get_pressed()
-    manager.handle_actions(pressed_keys)
+    stats = manager.handle_actions(pressed_keys)
 
+    times = stats.times
+    data = stats.data
+    ax.plot(times, data)
+    try :
+        ax.set_xlim(times[-20], times[-1])
+    except IndexError:
+        pass
+
+    canvas = agg.FigureCanvasAgg(fig)
+    canvas.draw()
+    renderer = canvas.get_renderer()
+    raw_data = renderer.tostring_rgb()
+
+    surf = pygame.image.fromstring(raw_data, canvas.get_width_height(), "RGB")
+    screen.blit(surf, (0, 0))
     # Flip the display
     pygame.display.flip()
 

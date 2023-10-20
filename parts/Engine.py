@@ -11,21 +11,26 @@ class Engine(Part):
         self.rpm = 0
         self.idle_rpm = 1000
         self.rev_limit = 10000
+        self.rpm_incr = 3000
 
     @property
     def get_rpm(self):
         return self.rpm
 
+    def calculate_incr(self, stab, rising_coeff, low_coeff, limit):
+        if (diff := abs(self.rpm - stab)) > 1 / limit:
+            if self.rpm <= limit:
+                return self.rpm + rising_coeff * diff
+            else:
+                return self.rpm - low_coeff * diff
+        else:
+            return self.rpm
+
     def rev_up(self):
-        if self.rpm < self.rev_limit - 15:
-            inc = 1 + round(math.exp(self.rpm / 1000))
-            self.rpm += 15
+        self.rpm = self.calculate_incr(self.rev_limit, 0.11, 0.5, 10000)
 
     def idle(self):
-        if self.rpm <= self.idle_rpm:
-            self.rev_up()
-        else:
-            self.rpm -= random.randrange(20)
+        self.rpm = self.calculate_incr(self.idle_rpm, 0.185, 0.075, 1000)
 
     def shift(self, rpm):
         self.rpm += rpm

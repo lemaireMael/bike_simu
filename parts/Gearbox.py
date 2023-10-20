@@ -19,10 +19,17 @@ class Gearbox(Part):
     def shift_up(self):
         if self.gear < len(self.ratios):
             self.gear += 1
+            return True
+        else:
+            return False
 
     def shift_down(self):
         if self.gear > 1:
             self.gear -= 1
+            return True
+
+        else:
+            return False
 
     @property
     def get_ratio(self):

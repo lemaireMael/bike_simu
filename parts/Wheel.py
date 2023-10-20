@@ -21,4 +21,4 @@ class RearWheel(Wheel):
 
     @property
     def get_ratio(self):
-        return self.pignon
+        return 45 / self.pignon
